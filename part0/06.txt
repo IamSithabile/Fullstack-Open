@@ -1,0 +1,14 @@
+title SPA  new note  Browser -server response cycle
+
+note over browser:
+user fills in the form and clicks the submit button
+this triggers the event handler defined in spa.js
+before sending the browser prepares the note and prevents 
+the default form behavior
+end note 
+browser -> server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+ 
+
+note over browser:
+Calls the redraw notes function to update the display with the new note
+end note
