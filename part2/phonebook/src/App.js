@@ -10,7 +10,11 @@ const App = () => {
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
+    const alreadyExists = persons.find((person) => person.name === newName);
 
+    if (alreadyExists) {
+      return alert(`${newName} is already added to phonebook`);
+    }
     const personObj = {
       name: newName,
     };
