@@ -25,13 +25,23 @@ const App = () => {
     setVote(copy);
   };
 
+  const biggestNum = Math.max(...vote);
+  const indexOfBigNum = vote.indexOf(biggestNum);
+
   return (
     <>
-      <div>{anecdotes[selected]}</div>
+      <h1>Anecdote of the day</h1>
+
+      <p>{anecdotes[selected]}</p>
       <p> Has {vote[selected]} votes</p>
       <br />
       <button onClick={() => voteHandler(selected)}>Vote</button>
       <button onClick={randomHandler}>Next anecdote</button>
+      <br />
+
+      <h1>Anecdote with the most votes</h1>
+      <p>{anecdotes[indexOfBigNum]}</p>
+      <p>Has {biggestNum} votes</p>
     </>
   );
 };
