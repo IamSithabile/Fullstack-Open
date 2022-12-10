@@ -2,7 +2,7 @@ import React from "react";
 import Country from "./Country";
 
 const CountriesList = (props) => {
-  const { filteredCountries } = props;
+  const { filteredCountries, showCountry } = props;
   //   console.log("countries in the coultriesList component", filteredCountries);
 
   if (filteredCountries.length > 10) {
@@ -16,7 +16,20 @@ const CountriesList = (props) => {
   return (
     <ul>
       {filteredCountries.map((country) => {
-        return <li key={country.name.common}> {country.name.common}</li>;
+        return (
+          <>
+            <li key={country.name.common}>
+              {country.name.common}
+              <button
+                onClick={() => {
+                  showCountry(country.name.common);
+                }}
+              >
+                Show
+              </button>
+            </li>
+          </>
+        );
       })}
     </ul>
   );

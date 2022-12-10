@@ -20,6 +20,10 @@ function App() {
     setQuery(e.target.value);
   };
 
+  const showCountry = (country) => {
+    setQuery(country);
+  };
+
   const filteredCountries = countries.filter((country) =>
     country.name.common.toLowerCase().includes(query.toLowerCase())
   );
@@ -29,7 +33,10 @@ function App() {
       <h2>Search</h2>
       <Filter query={query} filterHandler={filterHandler} />
       <h2>Countries found:</h2>
-      <CountriesList filteredCountries={filteredCountries} />
+      <CountriesList
+        showCountry={showCountry}
+        filteredCountries={filteredCountries}
+      />
     </>
   );
 }
