@@ -2,12 +2,16 @@ import React from "react";
 import PersonDetails from "./PersonDetails";
 
 const Persons = (props) => {
-  const { filteredList } = props;
+  const { filteredList, removePerson } = props;
 
   return (
     <ul>
       {filteredList.map((person) => (
-        <PersonDetails key={person.name} person={person} />
+        <PersonDetails
+          key={person.name}
+          person={person}
+          removePerson={removePerson}
+        />
       ))}
     </ul>
   );

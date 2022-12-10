@@ -13,4 +13,14 @@ const addPerson = async (newNoteObj) => {
   return request.then((response) => response.data);
 };
 
-export { getAll, addPerson };
+const removePerson = (id) => {
+  axios.delete(`${baseUrl}/${id}`);
+};
+
+const updateNumber = (id, updatedObj) => {
+  const request = axios.put(`${baseUrl}/${id}`, updatedObj);
+
+  return request.then((response) => response.data);
+};
+
+export { getAll, addPerson, removePerson, updateNumber };

@@ -2,7 +2,12 @@ import { useState, useEffect } from "react";
 import Filter from "./components/Filter";
 import Persons from "./components/Persons";
 import PersonForm from "./components/PersonForm";
-import { getAll, addPerson } from "./services/backend";
+import {
+  getAll,
+  addPerson,
+  removePerson,
+  updateNumber,
+} from "./services/backend";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -33,7 +38,23 @@ const App = () => {
     const alreadyExists = persons.find((person) => person.name === newName);
 
     if (alreadyExists) {
-      return alert(`${newName} is already added to phonebook`);
+      const confirmResult = window.confirm(
+        `${newName} is already in the phonebook. Do you want to add them again?`
+      );
+
+      // If the user clicks "Cancel", do not add the person to the phonebook
+      if (!confirmResult) {
+        return;
+      }
+
+      if (confirmResult) {
+        const newObj = { ...alreadyExists, number: newNumber };
+
+        updateNumber(alreadyExists.id, newObj).then((serverObj) =>
+          console.log(serverObj)
+        );
+        return;
+      }
     }
     const personObj = {
       name: newName,
@@ -68,10 +89,11 @@ const App = () => {
         nameHandler={nameHandler}
         newNumber={newNumber}
         numberHandler={numberHandler}
+        persons={persons}
       />
 
       <h3>Numbers</h3>
-      <Persons filteredList={filteredList} />
+      <Persons filteredList={filteredList} removePerson={removePerson} />
     </div>
   );
 };
