@@ -34,6 +34,7 @@ function App() {
       <Filter query={query} filterHandler={filterHandler} />
       <h2>Countries found:</h2>
       <CountriesList
+        query={query}
         showCountry={showCountry}
         filteredCountries={filteredCountries}
       />

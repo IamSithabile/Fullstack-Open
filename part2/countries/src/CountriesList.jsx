@@ -2,8 +2,12 @@ import React from "react";
 import Country from "./Country";
 
 const CountriesList = (props) => {
-  const { filteredCountries, showCountry } = props;
+  const { filteredCountries, showCountry, query } = props;
   //   console.log("countries in the coultriesList component", filteredCountries);
+
+  if (query === "") {
+    return <p>Search for a country in the field above</p>;
+  }
 
   if (filteredCountries.length > 10) {
     return <p>There are too many results, please refine the search</p>;
