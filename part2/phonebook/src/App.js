@@ -14,10 +14,16 @@ const App = () => {
   useEffect(() => {
     axios.get("http://localhost:3001/persons").then((response) => {
       const data = response.data;
-      console.log(data);
+
       setPersons(data);
     });
   }, []);
+
+  const sendToServer = (personObj) => {
+    axios
+      .post("http://localhost:3001/persons", personObj)
+      .then((response) => console.log(response.data));
+  };
 
   const numberHandler = (e) => {
     setNewNumber(e.target.value);
@@ -37,7 +43,10 @@ const App = () => {
     const personObj = {
       name: newName,
       number: newNumber,
+      id: persons.length + 1,
     };
+
+    sendToServer(personObj);
 
     setPersons(persons.concat(personObj));
     setNewName("");
