@@ -37,7 +37,7 @@ const App = () => {
 
     if (alreadyExists) {
       const confirmResult = window.confirm(
-        `${newName} is already in the phonebook. Do you want to add them again?`
+        `${alreadyExists.name} is already in the phonebook. Do you want to update the number?`
       );
 
       // If the user clicks "Cancel", do not add the person to the phonebook
@@ -48,16 +48,28 @@ const App = () => {
       if (confirmResult) {
         const newObj = { ...alreadyExists, number: newNumber };
 
-        updateNumber(alreadyExists.id, newObj).then((serverObj) =>
-          setNotification({
-            message: `Succesfully change the number for ${serverObj.name} `,
-            className: "success",
+        updateNumber(alreadyExists.id, newObj)
+          .then((serverObj) => {
+            setNotification({
+              message: `Succesfully change the number for ${newObj.name} `,
+              className: "success",
+            });
+            setTimeout(() => {
+              setNotification(null);
+            }, 3000);
           })
-        );
+          .catch((error, alreadyExists) => {
+            console.log("The response for a failed axios.put request", error);
 
-        setTimeout(() => {
-          setNotification(null);
-        }, 3000);
+            setNotification({
+              message: `Information of ${newObj.name} has already been removed from the server`,
+              className: "error",
+            });
+
+            setTimeout(() => {
+              setNotification(null);
+            }, 3000);
+          });
 
         return;
       }
@@ -102,7 +114,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <Filter query={query} filterListHandler={filterListHandler} />
 
-      <h3>Add a new</h3>
+      <h3>Add a new entry</h3>
 
       <PersonForm
         formSubmitHandler={formSubmitHandler}
@@ -113,7 +125,7 @@ const App = () => {
         persons={persons}
       />
 
-      <h3>Numbers</h3>
+      <h3>People</h3>
       <Persons
         filteredList={filteredList}
         removePerson={removePerson}

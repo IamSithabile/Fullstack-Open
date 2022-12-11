@@ -7,18 +7,31 @@ const PersonDetails = ({ person, removePerson, setNotification }) => {
     const confirmResult = window.confirm("Are you sure you want to do this?");
 
     if (confirmResult) {
-      removePerson(id).then((response) => {
-        console.log("The response for axios.delete", response);
+      removePerson(id)
+        .then((response) => {
+          console.log("The response for axios.delete", response);
 
-        setNotification({
-          message: "Successfully deleted the entry",
-          className: "success",
+          setNotification({
+            message: "Successfully deleted the entry",
+            className: "success",
+          });
+
+          setTimeout(() => {
+            setNotification(null);
+          }, 3000);
+        })
+        .catch((error) => {
+          console.log("The response for a failed axios.delete", error);
+
+          setNotification({
+            message: "Error could not find the entry to delete",
+            className: "error",
+          });
+
+          setTimeout(() => {
+            setNotification(null);
+          }, 3000);
         });
-
-        setTimeout(() => {
-          setNotification(null);
-        }, 5000);
-      });
     }
   };
   return (

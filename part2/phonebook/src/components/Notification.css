@@ -10,7 +10,7 @@
 .error {
   padding: 0.5rem;
   background-color: lightcoral;
-  color: grey;
+  color: rgb(103, 100, 100);
   border: 1px solid red;
   border-radius: 1rem;
   text-align: center;
