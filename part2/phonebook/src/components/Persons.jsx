@@ -2,7 +2,7 @@ import React from "react";
 import PersonDetails from "./PersonDetails";
 
 const Persons = (props) => {
-  const { filteredList, removePerson } = props;
+  const { filteredList, removePerson, setNotification } = props;
 
   return (
     <ul>
@@ -11,6 +11,7 @@ const Persons = (props) => {
           key={person.name}
           person={person}
           removePerson={removePerson}
+          setNotification={setNotification}
         />
       ))}
     </ul>

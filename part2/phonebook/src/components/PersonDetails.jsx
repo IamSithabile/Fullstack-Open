@@ -1,13 +1,24 @@
 import React from "react";
 
-const PersonDetails = ({ person, removePerson }) => {
+const PersonDetails = ({ person, removePerson, setNotification }) => {
   const { name, number, id } = person;
 
   const handleClick = () => {
     const confirmResult = window.confirm("Are you sure you want to do this?");
 
     if (confirmResult) {
-      removePerson(id);
+      removePerson(id).then((response) => {
+        console.log("The response for axios.delete", response);
+
+        setNotification({
+          message: "Successfully deleted the entry",
+          className: "success",
+        });
+
+        setTimeout(() => {
+          setNotification(null);
+        }, 5000);
+      });
     }
   };
   return (

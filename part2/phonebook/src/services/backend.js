@@ -14,7 +14,8 @@ const addPerson = async (newNoteObj) => {
 };
 
 const removePerson = (id) => {
-  axios.delete(`${baseUrl}/${id}`);
+  const request = axios.delete(`${baseUrl}/${id}`);
+  return request.then((request) => request.data);
 };
 
 const updateNumber = (id, updatedObj) => {

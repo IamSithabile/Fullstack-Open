@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Filter from "./components/Filter";
 import Persons from "./components/Persons";
 import PersonForm from "./components/PersonForm";
+import Notification from "./components/Notification";
 import {
   getAll,
   addPerson,
@@ -14,16 +15,13 @@ const App = () => {
   const [query, setQuery] = useState("");
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
+  const [notification, setNotification] = useState(null);
 
   useEffect(() => {
     getAll().then((phonebook) => {
       setPersons(phonebook);
     });
   }, []);
-
-  const sendToServer = (personObj) => {
-    addPerson(personObj).then((response) => console.log(response));
-  };
 
   const numberHandler = (e) => {
     setNewNumber(e.target.value);
@@ -51,8 +49,16 @@ const App = () => {
         const newObj = { ...alreadyExists, number: newNumber };
 
         updateNumber(alreadyExists.id, newObj).then((serverObj) =>
-          console.log(serverObj)
+          setNotification({
+            message: `Succesfully change the number for ${serverObj.name} `,
+            className: "success",
+          })
         );
+
+        setTimeout(() => {
+          setNotification(null);
+        }, 3000);
+
         return;
       }
     }
@@ -62,7 +68,16 @@ const App = () => {
       id: persons.length + 1,
     };
 
-    sendToServer(personObj);
+    addPerson(personObj).then((response) => {
+      setNotification({
+        message: `Succesfully added ${response.name} to the phonebook `,
+        className: "success",
+      });
+
+      setTimeout(() => {
+        setNotification(null);
+      }, 3000);
+    });
 
     setPersons(persons.concat(personObj));
     setNewName("");
@@ -78,6 +93,12 @@ const App = () => {
 
   return (
     <div>
+      {notification && (
+        <Notification
+          message={notification.message}
+          className={notification.className}
+        />
+      )}
       <h2>Phonebook</h2>
       <Filter query={query} filterListHandler={filterListHandler} />
 
@@ -93,7 +114,11 @@ const App = () => {
       />
 
       <h3>Numbers</h3>
-      <Persons filteredList={filteredList} removePerson={removePerson} />
+      <Persons
+        filteredList={filteredList}
+        removePerson={removePerson}
+        setNotification={setNotification}
+      />
     </div>
   );
 };
