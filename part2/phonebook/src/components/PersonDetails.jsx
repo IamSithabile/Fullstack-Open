@@ -1,6 +1,12 @@
 import React from "react";
 
-const PersonDetails = ({ person, removePerson, setNotification }) => {
+const PersonDetails = ({
+  person,
+  removePerson,
+  setNotification,
+  setPersons,
+  persons,
+}) => {
   const { name, number, id } = person;
 
   const handleClick = () => {
@@ -19,6 +25,8 @@ const PersonDetails = ({ person, removePerson, setNotification }) => {
           setTimeout(() => {
             setNotification(null);
           }, 3000);
+
+          setPersons(persons.filter((p) => p.id !== id));
         })
         .catch((error) => {
           console.log("The response for a failed axios.delete", error);

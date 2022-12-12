@@ -2,7 +2,8 @@ import React from "react";
 import PersonDetails from "./PersonDetails";
 
 const Persons = (props) => {
-  const { filteredList, removePerson, setNotification } = props;
+  const { filteredList, removePerson, setNotification, setPersons, persons } =
+    props;
 
   return (
     <ul>
@@ -12,6 +13,8 @@ const Persons = (props) => {
           person={person}
           removePerson={removePerson}
           setNotification={setNotification}
+          setPersons={setPersons}
+          persons={persons}
         />
       ))}
     </ul>

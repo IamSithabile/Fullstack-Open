@@ -130,6 +130,8 @@ const App = () => {
         filteredList={filteredList}
         removePerson={removePerson}
         setNotification={setNotification}
+        setPersons={setPersons}
+        persons={persons}
       />
     </div>
   );
