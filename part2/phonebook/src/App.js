@@ -14,7 +14,7 @@ const App = () => {
   const [persons, setPersons] = useState([]);
   const [query, setQuery] = useState("");
   const [newName, setNewName] = useState("");
-  const [newNumber, setNewNumber] = useState("");
+  const [newNumber, setNewNumber] = useState(undefined);
   const [notification, setNotification] = useState(null);
 
   useEffect(() => {
@@ -68,7 +68,7 @@ const App = () => {
 
             setTimeout(() => {
               setNotification(null);
-            }, 3000);
+            }, 5000);
           });
 
         return;
@@ -89,22 +89,22 @@ const App = () => {
         setTimeout(() => {
           setNotification(null);
         }, 3000);
+
+        setPersons(persons.concat(personObj));
+        setNewName("");
       })
       .catch((error) => {
         console.log("The validation failed", error);
 
         setNotification({
-          message: `${error.error}`,
+          message: `${error.response.data.error}`,
           className: "error",
         });
 
         setTimeout(() => {
           setNotification(null);
-        }, 3000);
+        }, 5000);
       });
-
-    setPersons(persons.concat(personObj));
-    setNewName("");
   };
 
   const filterListHandler = (e) => {
