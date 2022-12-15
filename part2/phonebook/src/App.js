@@ -77,19 +77,31 @@ const App = () => {
     const personObj = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1,
     };
 
-    addPerson(personObj).then((response) => {
-      setNotification({
-        message: `Succesfully added ${response.name} to the phonebook `,
-        className: "success",
-      });
+    addPerson(personObj)
+      .then((response) => {
+        setNotification({
+          message: `Succesfully added ${response.name} to the phonebook `,
+          className: "success",
+        });
 
-      setTimeout(() => {
-        setNotification(null);
-      }, 3000);
-    });
+        setTimeout(() => {
+          setNotification(null);
+        }, 3000);
+      })
+      .catch((error) => {
+        console.log("The validation failed", error);
+
+        setNotification({
+          message: `${error.error}`,
+          className: "error",
+        });
+
+        setTimeout(() => {
+          setNotification(null);
+        }, 3000);
+      });
 
     setPersons(persons.concat(personObj));
     setNewName("");
